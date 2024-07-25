@@ -13,6 +13,10 @@ usersRouter.route('/signup')
 .post(usersController.addUsers)
 
 usersRouter.route('/login')
-.post(usersController.addUsers)
+.post(usersController.verifyUsers)
+
+usersRouter.route('/update')
+.post(usersController.updateUsers)
+
 
 module.exports = usersRouter

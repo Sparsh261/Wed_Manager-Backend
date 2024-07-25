@@ -1,32 +1,39 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    Name: {
+    name: {
         type: String,
         required: true
     },
-    Email: {
+    email: {
         type: String,
         required: true,
         unique:true
     },
-    Password: {
+    password: {
         type: String,
         required: true,
         unique:true
     },
-    Authtoken:String,
-    Gender: {
+    authToken:String,
+    gender: {
         type: String,
     },
-    Partner_name: {
+    partner_name: {
         type: String,
     },
-    Budget: Number,
-    Date: Date,
-    Category: String,
-    Location: String,
-    Guests: Number,
+    budget: Number,
+    date: Date,
+    location: String,
+    guests: Number,
+    guestList: [{
+        name:String,
+        email:String
+    }],
+    task: [{
+        task:String,
+        description:String
+    }]
 })
 
 const userModel = mongoose.model('Users', userSchema);

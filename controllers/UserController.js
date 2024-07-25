@@ -37,10 +37,10 @@ const addUsers = async (req, res) => {
 
     try {
         await userModel.create({
-            Name: name,
-            Email: email,
-            Password: secretPassword,
-            AuthToken: authToken
+            name: name,
+            email: email,
+            password: secretPassword,
+            authToken: authToken
         })
         res.json({
             status: "success"
@@ -57,8 +57,7 @@ const addUsers = async (req, res) => {
 
 const verifyUsers = async (req, res) => {
     const { email, password } = req.body;
-    const user = await usersModel.findOne({ email });
-
+    const user = await userModel.findOne({ email:email });
     try {
         if (!user) {
             res.json({
@@ -69,23 +68,22 @@ const verifyUsers = async (req, res) => {
         else {
             const chkPass = await bcrypt.compare(password, user.password);
             if (chkPass) {
-
                 res.json({
                     status: "true",
                     users: user,
                     authToken: user.authToken
                 })
             }
-            else {
+            else {  
                 res.json({
                     status: "false",
                     msg: "Invalid Credentials"
                 })
             }
         }
-    }
+    } 
     catch (err) {
-        req.json({
+        res.json({
             error: err
         })
     }
@@ -111,10 +109,11 @@ const replaceProduct = async (req, res) => {
     }
 }
 
-const updateProducts = async (req, res) => {
+const updateUsers = async (req, res) => {
     try {
-        const { _id, ...data } = req.body
-        const ans = await productModel.findOneAndUpdate({ _id: req.params.id }, data);
+        const data = req.body
+        console.log(data.Name)
+        // const ans = await productModel.findOneAndUpdate({ _id: req.params.id }, data);
         res.json({
             status: "success",
             results: 1,
@@ -154,8 +153,9 @@ const deleteProducts = async (req, res) => {
 
 module.exports = {
     getUsers,
+    verifyUsers,
     addUsers,
     replaceProduct,
-    updateProducts,
+    updateUsers,
     deleteProducts
 }
